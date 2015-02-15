@@ -3,6 +3,7 @@ from flask import Flask, request, redirect, g, render_template
 import requests
 import base64
 import os
+import spotipy
 
 app = Flask(__name__)
 
@@ -24,13 +25,19 @@ def callback():
 	headers = {"Authorization":"Basic %s" % base64encoded}
 	post_request = requests.post("https://accounts.spotify.com/api/token",data=code_payload,headers=headers)
 	json_response = json.loads(post_request.text)
-
-	print json_response
+	
+	token = json_response[u'access_token']
 	# at some point, we will want to render_template ("auth_successful_page.html") after we design it
+	
+	# dummy code do demonstrate how spotipy works
+	sp = spotipy.Spotify(auth=token)
+	playlists = sp.user_playlists('jayshahtx')
+	for playlist in playlists['items']:
+		if playlist['owner']['id'] == 'jayshahtx':
+			print
+			print playlist['name']
+
 	return ("Authentication was successful!")
-
-
-
 
 if __name__ == "__main__":
 	app.run(debug=True,port=8080)
