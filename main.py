@@ -25,7 +25,7 @@ def callback():
 	post_request = requests.post("https://accounts.spotify.com/api/token",data=code_payload,headers=headers)
 	json_response = json.loads(post_request.text)
 
-	
+	print json_response
 	# at some point, we will want to render_template ("auth_successful_page.html") after we design it
 	return ("Authentication was successful!")
 
