@@ -4,6 +4,7 @@ import requests
 import base64
 import os
 import spotipy
+import twilio.twiml
 
 app = Flask(__name__)
 
@@ -25,7 +26,7 @@ def callback():
 	headers = {"Authorization":"Basic %s" % base64encoded}
 	post_request = requests.post("https://accounts.spotify.com/api/token",data=code_payload,headers=headers)
 	json_response = json.loads(post_request.text)
-	
+
 	token = json_response[u'access_token']
 	# at some point, we will want to render_template ("auth_successful_page.html") after we design it
 	
@@ -38,6 +39,14 @@ def callback():
 			print playlist['name']
 
 	return ("Authentication was successful!")
+
+@app.route("/twilio", methods=['GET', 'POST'])
+def respont_to_text():
+    """Respond to incoming calls with a simple text message."""
+ 
+    resp = twilio.twiml.Response()
+    resp.message("Hello, Mobile Monkey")
+    return str(resp)
 
 if __name__ == "__main__":
 	app.run(debug=True,port=8080)
