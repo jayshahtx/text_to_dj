@@ -1,10 +1,16 @@
-import json
+# web protocol
 from flask import Flask, request, redirect, g, render_template
 import requests
 import base64
-import os
+import json
+
+# app dependencies
 import spotipy
 import twilio.twiml
+
+# internal
+import os
+from spotify_fns import search
 
 app = Flask(__name__)
 
@@ -25,7 +31,6 @@ def callback():
 	base64encoded = base64.b64encode(os.environ.get('SPOTIPY_CLIENT_ID') + ":" + os.environ.get('SPOTIPY_CLIENT_SECRET'))
 	headers = {"Authorization":"Basic %s" % base64encoded}
 	post_request = requests.post("https://accounts.spotify.com/api/token",data=code_payload,headers=headers)
-	print json.dumps(code_payload, indent=1)
 	json_response = json.loads(post_request.text)
 	token = json_response[u'access_token']
 	
@@ -47,9 +52,14 @@ def refresh_token():
 @app.route("/twilio", methods=['GET', 'POST'])
 def respont_to_text():
     """Respond to incoming calls with a simple text message."""
- 
+    
+    # search for a song name and print results
+    body = request.values.get('Body', None)
+    search.search_for_song(body)
+
+    # respond to let sender know message was received
     resp = twilio.twiml.Response()
-    resp.message("Hello, Mobile Monkey")
+    resp.message("Anisha is a Monkey")
     return str(resp)
 
 if __name__ == "__main__":
