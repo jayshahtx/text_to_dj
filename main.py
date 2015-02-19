@@ -25,20 +25,24 @@ def callback():
 	base64encoded = base64.b64encode(os.environ.get('SPOTIPY_CLIENT_ID') + ":" + os.environ.get('SPOTIPY_CLIENT_SECRET'))
 	headers = {"Authorization":"Basic %s" % base64encoded}
 	post_request = requests.post("https://accounts.spotify.com/api/token",data=code_payload,headers=headers)
+	print json.dumps(code_payload, indent=1)
 	json_response = json.loads(post_request.text)
-
 	token = json_response[u'access_token']
-	# at some point, we will want to render_template ("auth_successful_page.html") after we design it
 	
-	# dummy code do demonstrate how spotipy works
 	sp = spotipy.Spotify(auth=token)
-	playlists = sp.user_playlists('jayshahtx')
-	for playlist in playlists['items']:
-		if playlist['owner']['id'] == 'jayshahtx':
-			print
-			print playlist['name']
+	
+	# for now write the token to a text file, move to SQL later
+	text_file = open("auth.txt", "w")
+	text_file.write(str(token))
+	text_file.close()
 
+
+	# at some point, we will want to render_template ("auth_successful_page.html") after we design it
 	return ("Authentication was successful!")
+
+# build out this function later, see this url
+def refresh_token():
+	pass
 
 @app.route("/twilio", methods=['GET', 'POST'])
 def respont_to_text():
