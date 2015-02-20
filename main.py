@@ -32,6 +32,7 @@ def index():
 		'redirect_uri':os.environ.get('SPOTIPY_REDIRECT_URI'),
 		'scope' : 'playlist-modify-public'
 	})
+	
 	return redirect(root_url + u)
 
 @app.route("/callback/q")
