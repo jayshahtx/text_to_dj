@@ -1,5 +1,5 @@
 # web protocol
-from flask import Flask, request, redirect, g, render_template
+from flask import Flask, request, redirect, g, render_template, session
 import requests
 import base64
 import json
@@ -11,14 +11,22 @@ import twilio.twiml
 # internal
 import os
 from spotify_fns import search
+from text_fns.handlers import message_handler
 from misc.util import write_to_file
 
+
+# The session object makes use of a secret key.
+SECRET_KEY = 'a secret key'
 app = Flask(__name__)
+app.config.from_object(__name__)
+
+# https://whispering-hollows-1165.herokuapp.com
 
 @app.route('/')
 def index():
 	url1 = 'https://accounts.spotify.com/authorize/?client_id='
 	url2 = '&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Fcallback%2Fq&scope=playlist-modify-public+playlist-modify-private'
+	# url3 = '&response_type=code&redirect_uri=http%3A%2F%2Fwhispering-hollows-1165.herokuapp.com%2Fcallback%2Fq&scope=playlist-modify-public+playlist-modify-private'
 	return redirect(url1 + os.environ.get('SPOTIPY_CLIENT_ID') + url2)
 
 @app.route("/callback/q")
@@ -50,12 +58,13 @@ def respont_to_text():
     """Respond to incoming calls with a simple text message."""
     
     # search for a song name and print results
-    body = request.values.get('Body', None)
-    search_result = search.search_for_song(body)
+    # body = request.values.get('Body', None)
+
+    resp_text = message_handler(request)
 
     # respond to let sender know message was received
     resp = twilio.twiml.Response()
-    resp.message(search_result)
+    resp.message(resp_text)
     return str(resp)
 
 if __name__ == "__main__":

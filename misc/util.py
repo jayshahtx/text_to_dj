@@ -1,3 +1,8 @@
+import requests
+import base64
+import json
+import os
+
 def get_auth_token():
 	"""Reads in auth token from text file"""
 	auth = open('auth.txt', 'r')
@@ -39,8 +44,14 @@ def reauthenticate():
 		data=code_payload,
 		headers=headers
 	)
+	json_response = json.loads(post_request.text)
 
 	# parse the response
 	write_to_file(json_response[u'access_token'], 'auth.txt')
-	write_to_file(json_response[u'refresh_token'], 'refresh.txt')
 
+def stringify_results(results):
+	text_response = "Text back the number of your preffered song or -1 for none of the below: \n"
+
+	for i in range(0,len(results)):
+		text_response = text_response + str(i) + ": " + results[i]['name'] + "\n"
+	return text_response 
