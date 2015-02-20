@@ -3,6 +3,7 @@ from flask import Flask, request, redirect, g, render_template, session
 import requests
 import base64
 import json
+import urllib
 
 # app dependencies
 import spotipy
@@ -21,13 +22,17 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 # https://whispering-hollows-1165.herokuapp.com
-
+'https://accounts.spotify.com/authorize/redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Fcallback%2Fq&response_type=code&client_id=eba5e3a60a524fd996986a4a7b1c91a3'
 @app.route('/')
 def index():
-	url1 = 'https://accounts.spotify.com/authorize/?client_id='
-	url2 = '&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Fcallback%2Fq&scope=playlist-modify-public+playlist-modify-private'
-	# url3 = '&response_type=code&redirect_uri=http%3A%2F%2Fwhispering-hollows-1165.herokuapp.com%2Fcallback%2Fq&scope=playlist-modify-public+playlist-modify-private'
-	return redirect(url1 + os.environ.get('SPOTIPY_CLIENT_ID') + url2)
+	root_url = 'https://accounts.spotify.com/authorize/?'
+	u = urllib.urlencode({
+		'client_id': os.environ.get('SPOTIPY_CLIENT_ID'),
+		'response_type': 'code',
+		'redirect_uri':os.environ.get('SPOTIPY_REDIRECT_URI'),
+		'scope' : 'playlist-modify-public'
+	})
+	return redirect(root_url + u)
 
 @app.route("/callback/q")
 def callback():
