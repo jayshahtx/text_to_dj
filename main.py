@@ -11,6 +11,7 @@ import twilio.twiml
 # internal
 import os
 from spotify_fns import search
+from misc.util import write_to_file
 
 app = Flask(__name__)
 
@@ -32,15 +33,10 @@ def callback():
 	headers = {"Authorization":"Basic %s" % base64encoded}
 	post_request = requests.post("https://accounts.spotify.com/api/token",data=code_payload,headers=headers)
 	json_response = json.loads(post_request.text)
-	token = json_response[u'access_token']
-	
-	sp = spotipy.Spotify(auth=token)
 	
 	# for now write the token to a text file, move to SQL later
-	text_file = open("auth.txt", "w")
-	text_file.write(str(token))
-	text_file.close()
-
+	write_to_file(json_response[u'access_token'], 'auth.txt')
+	write_to_file(json_response[u'refresh_token'], 'refresh.txt')
 
 	# at some point, we will want to render_template ("auth_successful_page.html") after we design it
 	return ("Authentication was successful!")
@@ -55,11 +51,11 @@ def respont_to_text():
     
     # search for a song name and print results
     body = request.values.get('Body', None)
-    search.search_for_song(body)
+    search_result = search.search_for_song(body)
 
     # respond to let sender know message was received
     resp = twilio.twiml.Response()
-    resp.message("Anisha is a Monkey")
+    resp.message(search_result)
     return str(resp)
 
 if __name__ == "__main__":
