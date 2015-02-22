@@ -48,6 +48,10 @@ def reauthenticate():
 
 	# parse the response
 	write_to_file(json_response[u'access_token'], 'auth.txt')
+	
+	# if a new refresh token is passed save that as well
+	if json_response[u'refresh_token']:
+		write_to_file(json_response[u'refresh_token'], 'refresh.txt')
 
 def stringify_results(results):
 	text_response = "Text back the number of your preffered song or -1 for none of the below: \n"
