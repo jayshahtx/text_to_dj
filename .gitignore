@@ -50,4 +50,3 @@ target/
 venv/
 
 # temp file saving auth token
-*.txt
