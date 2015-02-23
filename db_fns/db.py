@@ -1,4 +1,5 @@
 import os
+import sys
 import pymongo
 from pymongo import MongoClient
 
@@ -19,7 +20,10 @@ def get_mongo_collection():
 	db_name = os.environ.get('MONGO_DB_NAME')
 	db_collection = os.environ.get('MONGO_COLLECTION_NAME')
 	print "received all env parameners"
-	return MongoClient(MONGO_URL)[db_name][db_collection]
+	try:
+		return MongoClient(MONGO_URL)[db_name][db_collection]
+	except:
+		print sys.exc_info()[0]
 
 def write_to_mongo(object_type, val):
 	"""Updates the object_type if it exists with val, otherwise makes
