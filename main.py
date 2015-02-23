@@ -66,7 +66,10 @@ def respont_to_text():
     # search for a song name and print results
     # body = request.values.get('Body', None)
 
-    resp_text = message_handler(request)
+    try:
+    	resp_text = message_handler(request)
+    except:
+    	resp_text = 'All users were logged out of Spotify, visit http://bit.ly/spotifyforjay to log back in'
 
     # respond to let sender know message was received
     resp = twilio.twiml.Response()
