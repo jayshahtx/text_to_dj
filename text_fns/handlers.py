@@ -1,5 +1,5 @@
 from flask import request, session, Flask
-from spotify_fns.search import search_for_song, update_playlist
+from spotify_fns.spotify import search_for_song, update_playlist
 from misc.util import stringify_results
 
 
