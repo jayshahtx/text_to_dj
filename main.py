@@ -35,11 +35,10 @@ def callback():
 	"""Finish the authentication process via a callback"""
 	# parse the token and authenticate with it
 	access_token = str(request.args['code'])
-	try:
-		authenticate(access_token)
-		return "Authentication was successful!"
-	except:
-		return "Authentication unsuccessful"
+
+	authenticate(access_token)
+	return "Authentication was successful!"
+	return "Authentication unsuccessful"
 
 
 @app.route("/twilio", methods=['GET', 'POST'])
