@@ -12,7 +12,7 @@ def get_code_paylod(access_token):
 	if not access_token:
 		refresh_token = get_refresh_token()
 		code_payload = {
-			"grant_type":"authorization_code",
+			"grant_type":"refresh_token",
 			"refresh_token":refresh_token,
 		}
 	else:
