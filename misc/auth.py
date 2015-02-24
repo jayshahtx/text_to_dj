@@ -42,7 +42,7 @@ def authenticate(access_token=None):
 	)
 	
 	json_response = json.loads(post_request.text)
-	
+	print json.dumps(json_response, indent=1)
 	# write the new access token to mongo db
 	write_to_mongo('access_token', json_response[u'access_token'])
 

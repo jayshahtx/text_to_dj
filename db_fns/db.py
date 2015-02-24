@@ -20,6 +20,7 @@ def get_mongo_collection():
 	MONGO_URL = os.environ.get('MONGOHQ_URL')
 	DB_NAME = os.environ.get('MONGO_DB_NAME')
 	DB_COLLECTION = os.environ.get('MONGO_COLLECTION_NAME')
+	print MONGO_URL, DB_NAME, DB_COLLECTION
 	return MongoClient(MONGO_URL)[DB_NAME][DB_COLLECTION]
 	
 def write_to_mongo(object_type, val):

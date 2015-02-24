@@ -20,7 +20,9 @@ def get_spotipy():
 	except:
 		# refresh tokens
 		authenticate()
+		token = get_auth_token()
 		sp = spotipy.Spotify(auth=token)
+		
 		# try searching, we don't care for results
 		sp.search("test")
 		return sp
