@@ -16,10 +16,11 @@ def get_refresh_token():
 
 def get_mongo_collection():
 	"""Returns mongo collection where our auth tokens are stored"""
+
 	MONGO_URL = os.environ.get('MONGOHQ_URL')
-	db_name = os.environ.get('MONGO_DB_NAME')
-	db_collection = os.environ.get('MONGO_COLLECTION_NAME')
-	return MongoClient(MONGO_URL)[db_name][db_collection]
+	DB_NAME = os.environ.get('MONGO_DB_NAME')
+	DB_COLLECTION = os.environ.get('MONGO_COLLECTION_NAME')
+	return MongoClient(MONGO_URL)[DB_NAME][DB_COLLECTION]
 	
 def write_to_mongo(object_type, val):
 	"""Updates the object_type if it exists with val, otherwise makes

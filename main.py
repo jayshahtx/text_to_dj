@@ -33,17 +33,16 @@ def index():
 @app.route("/callback/q")
 def callback():
 	"""Finish the authentication process via a callback"""
+	
 	# parse the token and authenticate with it
 	access_token = str(request.args['code'])
-
 	authenticate(access_token)
 	return "Authentication was successful!"
-	return "Authentication unsuccessful"
 
 
 @app.route("/twilio", methods=['GET', 'POST'])
 def respont_to_text():
-    """Respond to incoming song requests"""
+    """Respond to incoming text messages"""
 
     # generate response to incoming message and reply to user
     resp_text = message_handler(request)
