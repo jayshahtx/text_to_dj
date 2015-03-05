@@ -61,7 +61,9 @@ def authenticate(access_token=None):
 	write_to_mongo('expiration_time', expiration_time)
 
 	# if a refresh token is passed, write that as well
-	if json_response[u'refresh_token']:
+	try:
 		write_to_mongo('refresh_token', json_response[u'refresh_token'])
+	except:
+		pass
 
 	return True

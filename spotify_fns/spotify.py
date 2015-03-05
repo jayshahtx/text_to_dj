@@ -10,11 +10,6 @@ from db_fns.db import get_auth_token, check_token_exp
 def get_spotipy():
 	"""Function which returns an authenticated spotipy instance"""
 	
-	# check if the token is expired and authenticate if needed
-	if check_token_exp():
-		print "token was expired, re-authenticating"
-		authenticate()
-	
 	token = get_auth_token()
 	sp = spotipy.Spotify(auth=token)
 	return sp
