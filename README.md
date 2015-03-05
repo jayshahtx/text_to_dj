@@ -25,7 +25,6 @@ Text messages are recieved and sent via [Twilio's][5] API and song/playlist func
 ## Set up ##
 
 Each of the four steps above will produce some sort of credentials that you'll need to store for your program to work correctly. Create a new [config variable][12] in your Heroku app fo reach of these variables. **Note: this is not secure** but will suffice for the time being. Create the following config variables:
-
 <pre><code>
 export SPOTIPY_CLIENT_ID='Client ID from Spotify'
 export SPOTIPY_CLIENT_SECRET='Client secret from Spotify'
