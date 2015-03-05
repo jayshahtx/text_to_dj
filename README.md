@@ -57,4 +57,4 @@ As an aside, a feature I'd like to build (time permitting) is an admin option wh
 [10]:https://addons.heroku.com/mongolab
 [11]:https://heroku.com
 [12]:https://devcenter.heroku.com/articles/config-vars
-[13]: http://i.imgur.com/2OMPfTa.png?1
+[13]:http://i.imgur.com/e8lA14T.png?1
