@@ -24,6 +24,8 @@ def message_handler(req):
 def handle_song_response(body):
 	index = int(str(body))
 	song_history = session.get('song_history', None)
+	if index not in range(0,len(song_history[-1])):
+		return "Sorry, that's not a valid list number. Please try again"
 	if song_history:
 		return update_playlist(song_history[-1][index])
 	else:
