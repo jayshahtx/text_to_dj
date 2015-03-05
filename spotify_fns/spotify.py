@@ -61,11 +61,21 @@ def update_playlist(json_song):
 	#update playlist
 	results = sp.user_playlist_add_tracks(user_id, playlist_id, [track_id])
 
+	#playlist URL
+	playlist_url = (
+		'http://open.spotify.com/user/' + 
+		os.environ.get('SPOTIFY_USER_ID') + 
+		'/playlist/' + 
+		os.environ.get('SPOTIFY_PLAYLIST_ID')
+	)
+
+
 	#generate response
 	if results['snapshot_id']:
-		return "'%s' by %s was successfully added to your playlist"%(
+		return "'%s' by %s was successfully added to the playlist, you can view it here %s"%(
 			json_song['name'].encode('utf-8'),
-			json_song['artists']
+			json_song['artists'],
+			playlist_url
 		)
 	else:
 		return "Sorry, there was an error in search.update_playlist"
