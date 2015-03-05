@@ -41,7 +41,7 @@ Update your Twilio app's messaging URL to ensure that Twilio actually hits your 
 ![][13]
 
 ## Notes ##
-If you have trouble at any step of the way, please feel free to send me a message. This app is a great introduction to server side development and working with authentication/callbacks. A feature I'd like to build (time permitting) is an admin option which texts the owner of the playlist for permission each time someone makes a request to update the playlist.
+If you have trouble at any step of the way, please feel free to send me a message. This app is a great introduction to server side development and working with authentication/callbacks. A feature I'd like to build (time permitting) is an admin option which texts the owner of the playlist for permission each time someone makes a request to update the playlist - feel free to beat me to it!
 
 [1]:http://i.imgur.com/y6daUDV.png?1
 [2]:http://i.imgur.com/yaxqYBc.png?1
