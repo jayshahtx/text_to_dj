@@ -2,7 +2,7 @@ import os
 import sys
 import pymongo
 from pymongo import MongoClient
-from datetime import datetime, timedelta
+from datetime import datetime
 
 def get_auth_token():
 	"""Reads in auth token from mongo_db"""
@@ -21,7 +21,7 @@ def get_expiration_time():
 
 def check_token_exp():
 	"""Returns if the current token has expired """
-	return datetime.now() + timedelta(seconds=3600) > get_expiration_time()
+	return datetime.now() > get_expiration_time()
 
 def get_mongo_collection():
 	"""Returns mongo collection where our auth tokens are stored"""
