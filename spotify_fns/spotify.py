@@ -12,10 +12,12 @@ def get_spotipy():
 	
 	# check if the token is expired and authenticate if needed
 	if check_token_exp():
+		print "token was expired, re-authenticating"
 		authenticate()
 	
 	token = get_auth_token()
 	sp = spotipy.Spotify(auth=token)
+	return sp
 
 
 def search_for_song(song_name):
@@ -33,9 +35,11 @@ def search_for_song(song_name):
 	def parse_results(results):
 		top_results = results['tracks']['items']
 		response = []
+
+		max_range = min(5,len(top_results))
 		
 		# store the top 5 results
-		for i in range (0,5):
+		for i in range (0,max_range):
 			list_item = {}
 			list_item['name'] = top_results[i]['name']
 			list_item['artists'] = get_artists(top_results[i]['artists'])
