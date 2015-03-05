@@ -8,6 +8,15 @@ import os
 # mongo fns
 from db_fns.db import write_to_mongo, get_refresh_token
 
+# date calculations
+from datetime import datetime
+from datetime import timedelta
+
+def compute_expiration_time(seconds):
+	current_time = datetime.now()
+	expiration_time = current_time + timedelta(seconds=seconds-30)
+	return expiration_time
+
 def get_code_paylod(access_token):
 	if not access_token:
 		refresh_token = get_refresh_token()
@@ -43,8 +52,13 @@ def authenticate(access_token=None):
 	
 	json_response = json.loads(post_request.text)
 	print json.dumps(json_response, indent=1)
+
 	# write the new access token to mongo db
 	write_to_mongo('access_token', json_response[u'access_token'])
+
+	# write the expiration time
+	expiration_time = compute_expiration_time(json_response[u'expires_in'])
+	write_to_mongo('expiration_time', expiration_time)
 
 	# if a refresh token is passed, write that as well
 	if json_response[u'refresh_token']:

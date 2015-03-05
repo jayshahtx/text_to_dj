@@ -3,29 +3,20 @@ import pprint
 import json
 import os
 from misc.auth import authenticate
-from db_fns.db import get_auth_token
+
+from db_fns.db import get_auth_token, check_token_exp
 
 
 def get_spotipy():
 	"""Function which returns an authenticated spotipy instance"""
-	# check if we need to reauth
-	try:
-		token = get_auth_token()
-		sp = spotipy.Spotify(auth=token)
-		# try searching, we don't care for results
-		sp.search("test")
-		return sp
-
-	# perform re-auth and try again
-	except:
-		# refresh tokens
+	
+	# check if the token is expired and authenticate if needed
+	if check_token_exp():
 		authenticate()
-		token = get_auth_token()
-		sp = spotipy.Spotify(auth=token)
-		
-		# try searching, we don't care for results
-		sp.search("test")
-		return sp
+	
+	token = get_auth_token()
+	sp = spotipy.Spotify(auth=token)
+
 
 def search_for_song(song_name):
 	
