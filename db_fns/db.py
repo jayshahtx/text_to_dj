@@ -21,7 +21,7 @@ def get_expiration_time():
 
 def check_token_exp():
 	"""Returns if the current token has expired """
-	return datetime.now() + timedelta(seconds=3420) > get_expiration_time()
+	return datetime.now() + timedelta(seconds=3600) > get_expiration_time()
 
 def get_mongo_collection():
 	"""Returns mongo collection where our auth tokens are stored"""
