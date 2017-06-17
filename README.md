@@ -4,7 +4,9 @@ Text to DJ is an application that lets users text a song name to a phone number 
 
 1) Text a song name | 2) Select a song | 3) Playlist will be updated
 :------------------:|:----------------:|:-------------------------:
-![][1]  |  ![][2] | ![][3]
+![][1]
+![][2]
+![][3]
 
 ##How does it work?##
 Text messages are recieved and sent via [Twilio's][5] API and song/playlist functionality is handled via [Spotify's][6] API. 
