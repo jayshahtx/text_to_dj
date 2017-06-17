@@ -3,7 +3,7 @@
 Text to DJ is an application that lets users text a song name to a phone number and update a playlist with that song. Check out the screenshots below or try it yourself by texting a song name to 781-916-8742 and update [this playlist][4].
 
 1) Text a song name | 2) Select a song | 3) Playlist will be updated
-:-------------------------:|:-------------------------:|:-------------------------:
+:------------------:|:----------------:|:-------------------------:
 ![][1]  |  ![][2] | ![][3]
 
 ##How does it work?##
